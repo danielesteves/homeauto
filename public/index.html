@@ -9,7 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Homeauto</title>
+    
+    <link rel="manifest" href="/manifest.json">
 
   </head>
   <body>
@@ -99,6 +101,13 @@
     <script defer src="/__/firebase/init.js"></script>
 
     <script>
+        
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+                 .register('./service-worker.js')
+                 .then(function() { console.log('Service Worker Registered'); });
+    }
+        
     var config;
     var sensor;
       $(document).ready(function(){
