@@ -1,9 +1,21 @@
 {
   "name": "HomeAuto",
   "short_name": "HomeAuto",
-  
+  "icons": [{
+    "src": "images/touch/icon-128.png",
+    "type": "image/png",
+    "sizes": "128x128"
+  }, {
+    "src": "images/touch/icon-256.png",
+    "type": "image/png",
+    "sizes": "256x256"
+  }, {
+    "src": "images/touch/icon-512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }],
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#3E4EB8",
+  "background_color": "#FFFFFF",
   "theme_color": "#2F3BA2"
 }
