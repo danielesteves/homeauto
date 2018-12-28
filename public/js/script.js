@@ -34,7 +34,7 @@ function update() {
     }
 
     $('#relay-1').text(sensor.relay.relay1.state == 1 ? "On" : "Off");
-    if (sensor.sensors.presence.reading == 1) {
+    if (sensor.relay.relay1.state == 1) {
         $('#relay-1').addClass('new')
     } else {
         {
