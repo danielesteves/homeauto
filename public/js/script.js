@@ -39,7 +39,7 @@ function update() {
     } else {
         $('#presence span').removeClass('new');
     }
-    $('#presence span.badge').attr('data-tooltip', new Date(sensor.sensors.temperature.external.updated).toLocaleString());
+    $('#presence span.badge').attr('data-tooltip', new Date(sensor.sensors.presence.updated).toLocaleString());
 
     $('#relay-1 span.badge').text(sensor.relay.relay1.state == 1 ? "On" : "Off");
     if (sensor.relay.relay1.state == 1) {
@@ -47,7 +47,7 @@ function update() {
     } else {
         $('#relay-1 span.badge').removeClass('new');
     }
-    $('#relay-1 span.badge').attr('data-tooltip', new Date(sensor.sensors.temperature.external.updated).toLocaleString());
+    $('#relay-1 span.badge').attr('data-tooltip', new Date(sensor.relay.relay1.updated).toLocaleString());
 
 }
 
