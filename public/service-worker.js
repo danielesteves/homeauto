@@ -1,7 +1,7 @@
 /*eslint no-undef: "error"*/
 /*eslint-env browser*/
 
-var cacheName = 'homeauto-1-1-2';
+var cacheName = 'homeauto-1-2-0';
 var filesToCache = [
     '/',
     '/__/firebase/4.10.0/firebase-app.js',
