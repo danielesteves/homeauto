@@ -1,7 +1,7 @@
 /*eslint no-undef: "error"*/
 /*eslint-env browser*/
 
-var cacheName = 'homeauto-1-1-1';
+var cacheName = 'homeauto-1-1-2';
 var filesToCache = [
     '/',
     '/__/firebase/4.10.0/firebase-app.js',
@@ -9,7 +9,17 @@ var filesToCache = [
     '/__/firebase/4.10.0/firebase-database.js',
     '/__/firebase/4.10.0/firebase-messaging.js',
     '/__/firebase/4.10.0/firebase-storage.js',
-    '/__/firebase/init.js'
+    '/__/firebase/init.js',
+    '/css/materialize.css',
+    '/css/materialize.min.css',
+    '/css/style.css',
+    '/js/jquery-3.3.1.js',
+    '/js/materialize.js',
+    '/js/materialize.min.js',
+    '/js/script.js',
+    '/images/outlet.png',
+    '/images/sensor.png',
+    '/images/thermometer.png'
 ];
 
 

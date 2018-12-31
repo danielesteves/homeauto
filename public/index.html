@@ -5,7 +5,7 @@
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection" />
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,33 +38,33 @@
             <!-- Page Content goes here -->
             <ul class="collection collapsible" id='display'>
 
-                <li class="collection-item">
+                <li id="temp-internal" class="collection-item">
                     <p>
-                        <img src="images/thermometer.png" /> Internal Temperature<span class="badge"><span id="temp-internal">...</span>℃</span>
+                        <img src="images/thermometer.png" /> Internal Temperature<span class="badge tooltipped" data-position="bottom" data-tooltip="Updating..."><span class="value" >...</span>℃</span>
                     </p>
                 </li>
 
-                <li class="collection-item">
+                <li class="collection-item" id="temp-external">
                     <p>
-                        <img src="images/thermometer.png" /> External Temperature<span class="badge"><span id="temp-external">...</span>℃</span>
-                    </p>
-                </li>
-
-                <li class="collection-item">
-                    <div class="divider"></div>
-                </li>
-                <li class="collection-item">
-                    <p>
-                        <img src="images/sensor.png" /> Presence<span class="new badge" data-badge-caption="" id="presence">...</span>
+                        <img src="images/thermometer.png" /> External Temperature<span class="badge tooltipped" data-position="bottom" data-tooltip="Updating..."><span class="value">...</span>℃</span>
                     </p>
                 </li>
 
                 <li class="collection-item">
                     <div class="divider"></div>
                 </li>
-                <li class="collection-item">
+                <li class="collection-item" id="presence">
                     <p>
-                        <img src="images/outlet.png" /> Relay<span class="badge" data-badge-caption="" id="relay-1">...</span>
+                        <img src="images/sensor.png" /> Presence<span class="badge tooltipped" data-badge-caption="" id="" data-position="bottom" data-tooltip="Updating...">...</span>
+                    </p>
+                </li>
+
+                <li class="collection-item">
+                    <div class="divider"></div>
+                </li>
+                <li class="collection-item" id="relay-1">
+                    <p>
+                        <img src="images/outlet.png" /> Relay<span class="badge tooltipped" data-badge-caption="" id="" data-position="bottom" data-tooltip="Updating...">...</span>
                     </p>
                 </li>
             </ul>
