@@ -19,7 +19,8 @@ var filesToCache = [
     '/js/script.js',
     '/images/outlet.png',
     '/images/sensor.png',
-    '/images/thermometer.png'
+    '/images/thermometer.png',
+    '/images/cardiogram.png'
 ];
 
 

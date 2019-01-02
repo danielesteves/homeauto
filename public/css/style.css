@@ -8,6 +8,6 @@ main {
     flex: 1 0 auto;
 }
 
-div.container #display img {
+.icon {
     width: 1em;
 }

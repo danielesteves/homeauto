@@ -15,6 +15,8 @@ if ('serviceWorker' in navigator) {
 
 var config;
 var sensor;
+var lastHealth = 0;
+
 $(document).ready(function () {
     var database = firebase.database().ref('/');
 
@@ -23,7 +25,27 @@ $(document).ready(function () {
         sensor = snapshot.val().data;
         update();
     });
+    
+    setInterval(updateHealthChech, 1000);
 });
+
+function updateHealthChech() {
+    var element  = $('#healthcheck');
+    
+    if(lastHealth == 0){
+        element.text('Updating...');
+        return;
+    }
+    
+    var diff = (new Date().getTime() - lastHealth) / 1000;
+    element.text(`${Math.round(diff)} seconds ago`);
+    return;
+    
+    if(diff < 60) {
+        element.text('Online');
+        return;
+    }
+}
 
 function update() {
     $('#temp-internal span.value').text(sensor.sensors.temperature.internal.reading.toPrecision(4));
@@ -48,7 +70,9 @@ function update() {
         $('#relay-1 span.badge').removeClass('new');
     }
     $('#relay-1 span.badge').attr('data-tooltip', new Date(sensor.relay.relay1.updated).toLocaleString());
-
+    
+    //$('#healthcheck').text(new Date(sensor.health.updated).toLocaleString());
+    lastHealth = new Date(sensor.health.updated).getTime();
 }
 
 $(document).ready(function () {
