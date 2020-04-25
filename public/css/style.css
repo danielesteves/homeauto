@@ -11,3 +11,7 @@ main {
 .icon {
     width: 1em;
 }
+
+span.badge.min, span.badge.mean, span.badge.max{
+    font-size: small;
+}

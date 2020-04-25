@@ -1,8 +1,20 @@
 // These rules give anyone, even people who are not users of your app,
 // read and write access to your database
 {
-  "rules": {
-    ".read": true,
-    ".write": true
-  }
+    "rules": {
+        "users": {
+            "$uid": {
+                ".read": "$uid === auth.uid",
+                ".write": "$uid === auth.uid"
+            }
+        },
+        "data": {
+            ".read": true,
+            ".write": false
+        },
+        "config": {
+            ".read": true,
+            ".write": false
+        }
+    }
 }

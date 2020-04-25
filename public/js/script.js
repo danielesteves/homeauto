@@ -18,11 +18,23 @@ var sensor;
 var lastHealth = 0;
 
 $(document).ready(function () {
-    var database = firebase.database().ref('/');
+//    var database = firebase.database().ref('/');
 
-    database.on('value', function (snapshot) {
-        config = snapshot.val().config;
-        sensor = snapshot.val().data;
+//    database.on('value', function (snapshot) {
+//        config = snapshot.val().config;
+//        sensor = snapshot.val().data;
+//        update();
+//    });
+
+
+    var db_config = firebase.database().ref('/config');
+    db_config.on('value', function (snapshot) {
+        config = snapshot.val();
+        update();
+    });
+    var db_data = firebase.database().ref('/data');
+    db_data.on('value', function (snapshot) {
+        sensor = snapshot.val();
         update();
     });
     
@@ -48,12 +60,34 @@ function updateHealthChech() {
 }
 
 function update() {
-    $('#temp-internal span.value').text(sensor.sensors.temperature.internal.reading.toPrecision(4));
-    $('#temp-internal span.badge').attr('data-tooltip', new Date(sensor.sensors.temperature.internal.updated).toLocaleString());
     
-    
-    $('#temp-external span.value').text(sensor.sensors.temperature.external.reading.toPrecision(4));
-    $('#temp-external span.badge').attr('data-tooltip', new Date(sensor.sensors.temperature.external.updated).toLocaleString());
+    if(!config || !sensor) return;
+
+    if(!config.sensors.pir.enabled) {
+        $('#presence').hide();
+    }
+    if(!config.sensors.relay.enabled) {
+        $('#relay-1').hide();
+    }
+
+    $('#temp-internal .live span.value').text(sensor.sensors.temperature.internal.reading.toPrecision(4));
+    $('#temp-internal .live').attr('data-tooltip', new Date(sensor.sensors.temperature.internal.updated).toLocaleString());
+
+    $('#temp-internal .min span.value').text(sensor.sensors.temperature.internal.sumary.min.reading.toPrecision(4));
+    $('#temp-internal .min').attr('data-tooltip', new Date(sensor.sensors.temperature.internal.sumary.min.when).toLocaleString());
+    $('#temp-internal .max span.value').text(sensor.sensors.temperature.internal.sumary.max.reading.toPrecision(4));
+    $('#temp-internal .max').attr('data-tooltip', new Date(sensor.sensors.temperature.internal.sumary.max.when).toLocaleString());
+
+
+
+    $('#temp-external .live span.value').text(sensor.sensors.temperature.external.reading.toPrecision(4));
+    $('#temp-external .live').attr('data-tooltip', new Date(sensor.sensors.temperature.external.updated).toLocaleString());
+
+    $('#temp-external .min span.value').text(sensor.sensors.temperature.external.sumary.min.reading.toPrecision(4));
+    $('#temp-external .min').attr('data-tooltip', new Date(sensor.sensors.temperature.external.sumary.min.when).toLocaleString());
+    $('#temp-external .max span.value').text(sensor.sensors.temperature.external  .sumary.max.reading.toPrecision(4));
+    $('#temp-external .max').attr('data-tooltip', new Date(sensor.sensors.temperature.external.sumary.max.when).toLocaleString());
+
     
     $('#presence span').text(sensor.sensors.presence.reading == 1 ? "Present" : "None");
     if (sensor.sensors.presence.reading == 1) {
@@ -86,38 +120,127 @@ $(document).ready(function () {
 });
 
 
-// Handle incoming messages. Called when:
-// - a message is received while the app has focus
-// - the user clicks on an app notification created by a service worker
-//   `messaging.setBackgroundMessageHandler` handler.
+
+//Performance
+var perf = firebase.performance();
+
+//Messaging
 const messaging = firebase.messaging();
-messaging.onMessage(function(payload) {
+messaging.usePublicVapidKey("BFFpkVRUBTCCsHqgyenYKcFdP8Y7P6NeA7ngIxVMajiFm50Z_XbRRVFRqSfzwKrvdlE2NWd_hXZTg4QhwCxpZYQ");
+
+var user = firebase.auth().currentUser;
+if(user){
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        // TODO(developer): Retrieve an Instance ID token for use with FCM.
+        // ...
+      } else {
+        console.log('Unable to get permission to notify.');
+      }
+    });
+}
+
+function sendTokenToServer(token){
+    var user = firebase.auth().currentUser;
+    if(user){
+    firebase.database().ref('users/' + user.uid).set({
+                "token": token
+              });
+    }
+    console.log(token);
+}
+function showToken(token) {
+    console.log(token);
+}
+function setTokenSentToServer(token) {
+    console.log(token)
+}
+
+
+// Get Instance ID token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+messaging.getToken().then((currentToken) => {
+  if (currentToken) {
+    sendTokenToServer(currentToken);
+    //updateUIForPushEnabled(currentToken);
+  } else {
+    // Show permission request.
+    console.log('No Instance ID token available. Request permission to generate one.');
+    // Show permission UI.
+    //updateUIForPushPermissionRequired();
+    setTokenSentToServer(false);
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  showToken('Error retrieving Instance ID token. ', err);
+  setTokenSentToServer(false);
+});
+
+// Callback fired if Instance ID token is updated.
+messaging.onTokenRefresh(() => {
+  messaging.getToken().then((refreshedToken) => {
+    console.log('Token refreshed.');
+    // Indicate that the new Instance ID token has not yet been sent to the
+    // app server.
+    setTokenSentToServer(false);
+    // Send Instance ID token to app server.
+    sendTokenToServer(refreshedToken);
+    // ...
+  }).catch((err) => {
+    console.log('Unable to retrieve refreshed token ', err);
+    showToken('Unable to retrieve refreshed token ', err);
+  });
+});
+
+messaging.onMessage((payload) => {
   console.log('Message received. ', payload);
   // ...
 });
 
-
-
-//Chart
 /*
-var ctx = document.getElementById('myChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                // The type of chart we want to create
-                type: 'line',
-
-                // The data for our dataset
-                data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [{
-                        label: "My First dataset",
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        data: [0, 10, 5, 2, 20, 30, 45],
-                    }]
-                },
-
-                // Configuration options go here
-                options: {}
-            });
+    Auth
 */
+var uiConfig = {
+signInSuccessUrl: '/',
+signInOptions: [
+  // Leave the lines as is for the providers you want to offer your users.
+  firebase.auth.GoogleAuthProvider.PROVIDER_ID
+],
+// tosUrl and privacyPolicyUrl accept either url string or a callback
+// function.
+// Terms of service url/callback.
+tosUrl: '/',
+// Privacy policy url/callback.
+privacyPolicyUrl: function() {
+  window.location.assign('/');
+}
+};
 
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+// The start method will wait until the DOM is loaded.
+
+
+initApp = function () {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            $('#logout').removeClass('hide');
+            document.getElementById('logout').addEventListener('click', function() {
+                firebase.auth().signOut();
+              });
+            firebase.database().ref('users/' + user.uid).set({
+                username: user.displayName,
+                email: user.email,
+                profile_picture : user.photoURL
+              });
+        } else {
+            ui.start('#firebaseui-auth-container', uiConfig);
+            $('#logout').addClass('hide');
+        }
+
+    })
+}
+window.addEventListener('load', function() {
+    initApp();
+});

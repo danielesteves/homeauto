@@ -1,14 +1,15 @@
 /*eslint no-undef: "error"*/
 /*eslint-env browser*/
 
-var cacheName = 'homeauto-1-2-0';
+var cacheName = 'homeauto-1-3-1';
 var filesToCache = [
     '/',
-    '/__/firebase/4.10.0/firebase-app.js',
-    '/__/firebase/4.10.0/firebase-auth.js',
-    '/__/firebase/4.10.0/firebase-database.js',
-    '/__/firebase/4.10.0/firebase-messaging.js',
-    '/__/firebase/4.10.0/firebase-storage.js',
+    '/__/firebase/7.14.1/firebase-app.js',
+    '/__/firebase/7.14.1/firebase-auth.js',
+    '/__/firebase/7.14.1/firebase-database.js',
+    '/__/firebase/7.14.1/firebase-messaging.js',
+    '/__/firebase/7.14.1/firebase-storage.js',
+    '/__/firebase/7.14.1/firebase-performance.js',
     '/__/firebase/init.js',
     '/css/materialize.css',
     '/css/materialize.min.css',
