@@ -1,17 +1,19 @@
-// Give the service worker access to Firebase Messaging.
-// Note that you can only use Firebase Messaging here, other Firebase libraries
-// are not available in the service worker.
 importScripts('https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/7.14.1/firebase-messaging.js');
 
-// Initialize the Firebase app in the service worker by passing in the
-// messagingSenderId.
-firebase.initializeApp({
-  'messagingSenderId': '22320487567'
-});
+const firebaseConfig = {
+  apiKey: "AIzaSyDFcYA2c6RIPoDnu1aZwEUJe65VmajwrZA",
+  authDomain: "homeauto-1a72a.firebaseapp.com",
+  databaseURL: "https://homeauto-1a72a.firebaseio.com",
+  projectId: "homeauto-1a72a",
+  storageBucket: "homeauto-1a72a.appspot.com",
+  messagingSenderId: "22320487567",
+  appId: "1:22320487567:web:629c7b8e436b6bc21624fa",
+  measurementId: "G-D8XMB3LYPX"
+};
+firebase.initializeApp(firebaseConfig);
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
+
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {

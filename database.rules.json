@@ -9,11 +9,11 @@
             }
         },
         "data": {
-            ".read": true,
+            ".read": "auth != null",
             ".write": false
         },
         "config": {
-            ".read": true,
+            ".read": "auth != null",
             ".write": false
         }
     }

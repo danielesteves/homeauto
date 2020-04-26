@@ -1,21 +1,26 @@
 {
   "name": "HomeAuto",
   "short_name": "HomeAuto",
-  "icons": [{
-    "src": "images/touch/icon-128.png",
-    "type": "image/png",
-    "sizes": "128x128"
-  }, {
-    "src": "images/touch/icon-256.png",
-    "type": "image/png",
-    "sizes": "256x256"
-  }, {
-    "src": "images/touch/icon-512.png",
-    "type": "image/png",
-    "sizes": "512x512"
-  }],
+  "lang": "pt",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFFFFF",
-  "theme_color": "#ee6e73"
+  "orientation": "portrait-primary",
+  "theme_color": "#ee6e73",
+  "icons": [
+    {
+      "src": "images/touch/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "images/touch/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "images/touch/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

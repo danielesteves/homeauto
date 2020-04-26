@@ -4,12 +4,12 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker
         .register('./service-worker.js')
         .then(function () {
-            //console.log('Service Worker Registered');
+            console.log('service-worker.js Registered');
         });
     navigator.serviceWorker
         .register('./firebase-messaging-sw.js')
         .then(function () {
-            //console.log('Service Worker Registered');
+            console.log('firebase-messaging-sw.js Registered');
         });
 }
 
@@ -144,7 +144,7 @@ if(user){
 function sendTokenToServer(token){
     var user = firebase.auth().currentUser;
     if(user){
-    firebase.database().ref('users/' + user.uid).set({
+    firebase.database().ref('users/' + user.uid + "/token").set({
                 "token": token
               });
     }
@@ -229,7 +229,7 @@ initApp = function () {
             document.getElementById('logout').addEventListener('click', function() {
                 firebase.auth().signOut();
               });
-            firebase.database().ref('users/' + user.uid).set({
+            firebase.database().ref('users/' + user.uid + "/info").set({
                 username: user.displayName,
                 email: user.email,
                 profile_picture : user.photoURL
@@ -244,3 +244,6 @@ initApp = function () {
 window.addEventListener('load', function() {
     initApp();
 });
+
+//Analytics
+firebase.analytics();
